@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "SelectRole";
+    //Layout = null;
+}
+
+
+
+
+   
+   
+
+
+
+
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                   
+                    <h4>SelectRole.</h4>
+                    <hr />
+
+                    <button id="button_1" class="btn btn-primary" value="Student" name="but1">Student</button>
+                    <button id="button_2" class="btn btn-primary" value="Tutor" name="but2">Tutor</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+      $("#button_1").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "/Home/InsertRoleUserid/",
+      data: {
+        rolename: $("#button_1").val(),
+        
+      },
+      success: function(result) {
+        //alert('ok');
+          var url = '@Url.Action("ProfileEdit", "Student")';
+            window.location.href = url;
+      },
+      error: function(result) {
+        alert('error');
+      }
+    });
+  });
+
+  $("#button_2").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "/Home/InsertRoleUserid/",
+      data: {
+        rolename: $("#button_2").val(),
+        
+      },
+      success: function(result) {
+       // alert('ok');
+          var url = '@Url.Action("ProfileEdit", "Tutor")';
+            window.location.href = url;
+      },
+      error: function(result) {
+        alert('error');
+      }
+    });
+  });
+</script>

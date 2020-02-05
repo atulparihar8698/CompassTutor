@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "NotAccess";
+    //Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="main-wrapper">
+
+
+    <div class="page-wrapper" style="margin-left:0px;">
+        <div class="content container-fluid">
+
+            <form class="form-inline " style="text-align:center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                @*<h2 class="text-danger">Sorry, Your Account will be disable Please contact to adminstrator.</h2>*@
+                <div class="clearfix col-sm-12" style="padding:10px 20px 10px 20px;" id="div_actionMenu">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h2>Waiting for Approval</h2>
+                            <hr />
+                            <h4>Your Account is Waiting for Administrator Approval</h4><br />
+                            <h4>Please Check back Later</h4>
+                        </div>
+                    </div>
+                    @*<h2 class="text-danger">Sorry, Account Activation Needed Contact Administrator.</h2>*@
+
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px">Go Back</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#sidebar').hide();
+    });
+</script>

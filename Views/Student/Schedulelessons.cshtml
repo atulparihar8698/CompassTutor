@@ -1,0 +1,175 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Pagename = "Schedule Lessons";
+}
+
+
+<link href="~/css/jquery.datepick.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="~/css/dataTables.bootstrap.min.css">
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+
+@*<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>*@
+<style>
+    #slotdata .btn {
+        width: 90px !important;
+    }
+    a:hover {
+        text-decoration:none !important;
+    }
+   
+</style>
+<div class="main-wrapper">
+
+
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <h3 style="color:darkorange">My schedule</h3>
+                    </div>
+                </div>
+                <div class="row filter-row">
+                    @*<div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label">Select Tutor</label>
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Select Tutor</label>
+                                    <select class="select form-control floating" id="tutorList">
+                                        <option value="value">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>*@
+                    @*<input type="hidden" id="tutorid" value="@ViewBag.tutorid" />*@
+                    <div class="col-sm-3 col-xs-6">
+                        <label class="control-label">From</label>
+                        <div class="form-group form-focus">
+
+                            @*<input type="text" id="datepicker1" class="form-control floating date_Picker" />*@
+                            @*<input class="datepicker" data-date-format="mm/dd/yyyy">*@
+                            <input type="text" class="form-control floating test" id="popupDatepicker">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <label class="control-label">To</label>
+                        <div class="form-group form-focus">
+                            <input type="text" readonly class="form-control floating date_Picker" id="popupDatepicker2">
+                            @*<input type="date" class="form-control floating" />*@
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 col-xs-6">
+                        @*<a href="#" class="btn btn-success btn-block"> Search </a>*@
+                        <label class="control-label">&nbsp; </label>
+                        @*<input type="button" id="filter" class="btn btn-success btn-block" name="filter" value="Show" style="height:40px" />*@
+                        <button type="button" class="btn btn-success btn-block button2" id="filter" >Show</button>
+                    </div>
+                    <div class="col-sm-3 col-xs-6" style="padding-top:25px;">
+                        <h6><label style="width: 10px;height: 10px;background-color: #55ce63;border-radius: 50%;margin-bottom: 0px;"></label> Student Booked</h6>
+                        <h6><label style="width: 10px;height: 10px;background-color: #ffbc34;border-radius: 50%;margin-bottom: 0px;"></label> Not Available</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+
+
+                        <table id="slotdata" class="table table-striped custom-table datatable">
+                            <thead>
+                                @*<tr>
+                                        <th style="width:30%;">Name</th>
+                                        <th>Employee ID</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Join Date</th>
+                                        <th>Role</th>
+                                        <th class="text-right">Action</th>
+                                    </tr>*@
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                                @*<tr>
+                                        <td>
+
+                                            <h2><a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">9 Am <span></span></a></h2>
+                                        </td>
+                                        <td>FT-0002</td>
+                                        <td>richardmiles@example.com</td>
+                                        <td>9876543210</td>
+                                        <td>18 Mar 2014</td>
+
+
+                                    </tr>*@
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div id="mySlot" class="hide">
+
+    <div>
+        @*<label for="email">Slot Id:</label>*@
+        <input type="hidden" id="slotid" readonly class="form-control input-md">
+        <label for="name">Tutor Name:</label>
+        <input type="text" id="tname" readonly class="form-control input-md">
+        <label for="name">Subject:</label>
+        <input type="text" id="tsubject" readonly class="form-control input-md">
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script src="~/js/jquery.plugin.min.js"></script>
+<script src="~/js/jquery.datepick.js"></script>
+<script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
+
+
+<script src="~/js/Student/Schedulelessons.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "/tutor/TutorList",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (index, value) {
+                    $("#tutorList").append('<option value="' + value.id + '">' + value.firstName + ' ' + value.middleName + ' ' + value.lastName + '</option>');
+
+                });
+
+
+            }
+        });
+
+    });
+
+
+</script>
+

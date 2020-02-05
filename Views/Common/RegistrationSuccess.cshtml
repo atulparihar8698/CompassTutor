@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "RegistrationSuccess";
+}
+
+
+
+
+
+<div class="main-wrapper">
+
+
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+
+            <form class="form-inline text-center" style="padding-top:20%;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <h2 class="text-success">Hi, Your Registration is Successfully Completed.but wait for Adminstrator Approval... </h2>
+                <button type="submit" class="btn btn-primary">Go Back</button>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

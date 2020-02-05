@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="E:\PGI_GIT\CompassTutor\CompassTutor\obj\Release\netcoreapp2.2\PubTmp\Out\" />
+  <dbfullsql path="E:\PGI_GIT\CompassTutor\CompassTutor\obj\Release\netcoreapp2.2\PubTmp\EFSQLScripts\CompassTutor.Data.ApplicationDbContext.sql" />
+</sitemanifest>

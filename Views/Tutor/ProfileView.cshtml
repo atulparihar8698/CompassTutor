@@ -1,0 +1,336 @@
+﻿@using Data.Models
+@model Tutor
+@{
+    ViewData["Title"] = "List";
+}
+<style>
+    .contact_infor ul li {
+        width: 49%;
+        display: inline-block;
+    }
+
+    .addl_infor ul li {
+        width: 49%;
+        display: inline-block;
+    }
+
+    .card-box {
+        border-radius: 0px;
+        border-top: 1px solid #949494 !important;
+        box-shadow: none;
+        border: 0px;
+    }
+
+    .mb_5 {
+        margin-bottom: 5px !important;
+    }
+
+    .fa-star {
+        color: #f1c937 !important;
+    }
+
+    .mb_0 {
+        margin-bottom: 0px !important;
+    }
+
+    .pl_4 {
+        padding-left: 4px !important;
+    }
+
+    .card-title {
+        margin-bottom: 10px !important;
+        font-weight: 600;
+    }
+
+    .card-box {
+        padding: 15px 20px !important;
+    }
+</style>
+
+@*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">*@
+
+<div class="page-wrapper" style="min-height: 638px;">
+    <div class="content container-fluid">
+        <div class="row">
+            @if (ViewData["tutorprofile"] == null)
+            {
+                <div class="col-sm-8">
+                    <h4 class="page-title">My Profile</h4>
+                </div>
+            }
+            else
+            { <div class="col-sm-8">
+                    @*<h4 class="page-title">My Profile</h4>*@
+                </div>
+            }
+
+
+        </div>
+
+
+        <div class="card-box" style="border-top:0px !important;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-img-wrap">
+                            <div class="profile-img">
+                                @if (!String.IsNullOrEmpty(Model.ProfilePic))
+                                {
+
+                                    <a href="#"><img class="avatar" src="@Model.ProfilePic" alt=""></a>
+                                }
+                                else
+                                {
+                                    <a href="#"><img class="avatar" src="~/img/user.jpg" alt=""></a>
+
+                                }
+                                @*<a href="#"><img class="avatar" src="@Model.ProfilePic" alt=""></a>*@
+                            </div>
+                        </div>
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <h3 class="user-name mb_5">@Model.FirstName @Model.LastName</h3>
+                                        <h5 class="user-name mb_5">@Model.ProfileHeadLine</h5>
+                                        @*<div class="mb_5">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                        </div>*@
+                                        <h5 class="user-name"><i style="color:#60ad56" class="fa fa-clock-o" aria-hidden="true"></i> @ViewBag.hours hours tutoring</h5>
+                                        @*<h5 class="user-name m-t-0 m-b-0">@Model.ProfileHeadLine</h5>*@
+                                        <ul class="personal-info">
+                                            @*<li>
+                                                    <span class="title">Phone:</span>
+                                                    <span class="text"><a href="">@Model.PhoneNumber </a></span>
+                                                </li>*@
+                                            <li>
+                                                <span style="width:15px;" class="title">Email:</span>
+                                                <span class="text"><a href="">@Model.Email</a></span>
+                                            </li>
+
+                                        </ul>
+                                        @if (ViewData["tutorprofile"] == null)
+                                        {
+                                            <div class="staff-msg"><a href="/Tutor/Schedule" class="btn btn-custom">Schedules</a></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="staff-msg"><a href="/Student/Schedule/@Model.Id" class="btn btn-custom">Schedules</a></div>
+
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">
+                                        @*<li>
+                                                <span class="title">Phone:</span>
+                                                <span class="text"><a href="">@Model.PhoneNumber </a></span>
+                                            </li>*@
+                                        <li>
+                                            <span class="title">Age:</span>
+                                            <span class="text"><a href="">@Model.Age</a></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Birthday:</span>
+                                            <span id="dob" class="text">@ViewBag.dob</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Address:</span>
+                                            <span class="text">@Model.Address</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Gender:</span>
+                                            <span class="text">@Model.Gender</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                @*<div class="card-box m-b-0">
+                        <h3 class="card-title">Skills</h3>
+                    <div class="skills">
+                        <span>IOS</span>
+                        <span>Android</span>
+                        <span>Html</span>
+                        <span>CSS</span>
+                        <span>Codignitor</span>
+                        <span>Php</span>
+                        <span>Javascript</span>
+                        <span>Wordpress</span>
+                        <span>Jquery</span>
+                    </div>
+                    </div>*@
+            </div>
+        </div>
+
+        <div class="card-box" style="border-top:0px !important;">
+            <h3 class="card-title pl_4">About @Model.FirstName</h3>
+            <div class="card-box mb_0" style="padding-left:5px !important;">
+                <ul class="personal-info">
+                    <li>
+                        <span style="width:15%;" class="title">Bio:</span>
+                        <span class="text" style="text-align:justify;">@Model.Description</span>
+                    </li>
+                </ul>
+                @*<div class="row contact_infor">
+                    <label>Bio</label><p class="spc-zero-n spc-sm-s">@Model.Description</p>
+                    </div>*@
+            </div>
+            <h3 class="card-title pl_4">Contact Information</h3>
+            <div class="card-box mb_0">
+
+                <div class="row contact_infor">
+
+                    <ul class="personal-info">
+                        <li>
+                            <span class="title">Country:</span>
+                            <span class="text">@Model.Country.Name</span>
+                        </li>
+                        <li>
+                            <span class="title">State:</span>
+                            <span class="text">@Model.State.Name</span>
+                        </li>
+                        <li>
+                            <span class="title">City:</span>
+                            <span class="text">@Model.City.Name</span>
+                        </li>
+                        <li>
+                            <span class="title">TimeZone:</span>
+                            <span class="text">@Model.TimeZone.Name</span>
+                        </li>
+                        <li>
+                            <span class="title">Address:</span>
+                            <span class="text">@Model.Address</span>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <h3 class="card-title pl_4">Additional Information</h3>
+            <div class="card-box mb_0">
+                <div class="row addl_infor">
+
+                    <ul class="personal-info">
+                        <li>
+                            <span class="title">Education:</span>
+                            <span class="text">@Model.Education</span>
+                        </li>
+                        <li>
+                            <span class="title">Education Level:</span>
+                            <span class="text">@Model.EducationLevel</span>
+                        </li>
+                        <li>
+                            <span class="title">Experience:</span>
+                            <span class="text">@Model.Experience</span>
+                        </li>
+                        <li>
+                            <span class="title">Available on:</span>
+                            <span class="text">@Model.AvailableDays</span>
+                        </li>
+                        <li>
+                            <span class="title">Hourly Rate:</span>
+                            <span class="text">$ @Model.HourlyRate / hour</span>
+                        </li>
+                        <li>
+                            <span class="title">Options to Connect:</span>
+                            <span class="text">@Model.AvailableType</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+            </div>
+            <h3 class="card-title pl_4">Subjects</h3>
+            <div class="card-box mb_0">
+                <div class="row addl_infor">
+
+                    @*<ul class="personal-info">
+            <li>
+                <span class="title">@ViewBag.SubjectName:</span>
+                <span class="text">@ViewBag.STypeNames</span>
+            </li>
+        </ul>*@
+
+                    <ul class="personal-info">
+                        @foreach (var subtypenames in ViewBag.SubsTypeNames)
+                        {
+                            <li>
+                                <span class="title">@subtypenames.SubjectName:</span>
+                                <span class="text">@subtypenames.SubjectTypeName</span>
+                            </li>
+                            <br />
+                        }
+                    </ul>
+
+
+
+                </div>
+
+
+            </div>
+            <h3 class="card-title pl_4">Schedules</h3>
+            <div class="card-box mb_0">
+
+                <div class="row addl_infor">
+                    <div class="col-md-2" style="padding-left:0px;">
+                        <span style="color:#363232;font-weight:500;">Available Schedules</span>
+                    </div>
+                    <div class="col-md-5">
+                        <table class="table table-bordered" cellpadding="15" width="100%">
+
+                            <tr>
+                                <th>Day</th>
+                                <th>Date</th>
+                                <th>Time</th>
+
+                            </tr>
+
+                            @foreach (var v in ViewBag.Scheduledata)
+                            {
+                                <tr>
+                                    <td>@v.Day</td>
+                                    <td>@v.Date</td>
+                                    <td>@v.Time</td>
+
+                                </tr>
+                            }
+                        </table>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        @*var header1 = new Date("@Model.DOB");
+        header1.setDate(header1.getDate());
+        var tempoMonth = (header1.getMonth() + 1);
+        var tempoDate = (header1.getDate());
+        if (tempoDate < 10) tempoDate = '0' + tempoDate;
+        if (tempoMonth < 10) tempoMonth = '0' + tempoMonth;
+        var futDate = tempoMonth + "/" + tempoDate + "/" + header1.getFullYear();
+        //$("#header1").text(futDate);
+        $('#dob').text(futDate);*@
+    });
+</script>

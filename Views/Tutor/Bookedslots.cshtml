@@ -1,0 +1,176 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Pagename = "Bookedslots";
+    
+}
+<link href="~/css/jquery.datepick.css" rel="stylesheet" />
+@*<link rel="stylesheet" type="text/css" href="~/css/dataTables.bootstrap.min.css">*@
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" >
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<style>
+    .paginate_button.previous {
+        padding: 0px 10px !important;
+        cursor:pointer;
+    }
+
+    .paginate_button.next {
+        cursor:pointer;
+        padding: 0px 10px !important;
+    }
+    #Bookedslotdata th {
+        text-align:center;
+    }
+    #Bookedslotdata a {
+        color:white;
+    }
+     #Bookedslotdata td{
+        color:#337ab7
+    }
+      .filter .btn {
+            min-height:34px !important;
+           border-radius:5px;
+            padding:0px;
+    }
+    .form-focus .form-control {
+    height: 40px;
+    padding: 8px 12px 6px;
+}
+    .mt_15 {
+        margin-top:15px !important;
+    }
+
+    .btn:focus {
+         outline: 0px auto -webkit-focus-ring-color; 
+    
+    }
+
+/*tooltip*/
+
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 150px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+    .tooltip {
+        opacity: 1 !important;
+        border-bottom:0px !important;
+        position:absolute !important;
+       right:22%;
+       font-family:inherit;
+       font-size:13px !important;
+       cursor:pointer;
+    }
+    .table>tbody>tr>td {
+        border-top:0px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+<div class="main-wrapper">
+
+
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <h3 style="color:darkorange">Booked Slots</h3>
+                    </div>
+                </div>
+                <div class="row filter-row mt_15">
+                    <div class="col-sm-3 col-xs-6 ">
+                        <label class="control-label">From</label>
+                        <div class="form-group form-focus">
+
+                            @*<input type="text" id="datepicker1" class="form-control floating date_Picker" />*@
+                            @*<input class="datepicker" data-date-format="mm/dd/yyyy">*@
+                            <input type="text" class="form-control floating test" id="popupDatepicker">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <label class="control-label">To</label>
+                        <div class="form-group form-focus">
+                            @*<input type="text" class="form-control floating date_Picker" id="popupDatepicker2">*@
+                            <input type="text" class="form-control floating test1" id="popupDatepicker2">
+                            @*<input type="date" class="form-control floating" />*@
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 col-xs-6 filter">
+                        @*<a href="#" class="btn btn-success btn-block"> Search </a>*@
+                        <label class="control-label">&nbsp; </label>
+                        <input type="button" id="filter" class="btn btn-success btn-block button2" name="filter" value="Show" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table id="Bookedslotdata" align="center" class="table text-center table-striped table-bordered" style="background-color:white;">
+                            <thead style="color: #337ab7;">
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Subject</th>
+                                    <th>Topic</th>
+                                    <th>Student Notes</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody ></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script src="~/js/jquery.plugin.min.js"></script>
+<script src="~/js/jquery.datepick.js"></script>
+<script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
+<script src="~/js/Tutor/Bookedslots.js"></script>

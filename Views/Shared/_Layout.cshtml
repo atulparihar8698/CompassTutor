@@ -1,0 +1,437 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Http;
+
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <environment include="Development">
+        @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
+    </environment>
+    <environment exclude="Development">
+        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+            asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+            asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+            crossorigin="anonymous"
+            integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE="/>*@
+    </environment>
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.png">
+    @*<title>Dashboard - HRMS admin template</title>*@
+    <title>Compass Tutor</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/morris/morris.css">
+    <link rel="stylesheet" type="text/css" href="~/css/style.css">
+
+    <link rel="stylesheet" type="text/css" href="~/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap-datetimepicker.min.css">
+
+    <!--[if lt IE 9]>
+        <script src="~/js/html5shiv.min.js"></script>
+        <script src="~/js/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="~/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery.slimscroll.js"></script>
+    <script type="text/javascript" src="~/plugins/morris/morris.min.js"></script>
+    <script type="text/javascript" src="~/plugins/raphael/raphael-min.js"></script>
+    <script type="text/javascript" src="~/js/select2.min.js"></script>
+    <script type="text/javascript" src="~/js/moment.min.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="~/js/app.js"></script>
+    <script src="~/js/Tutor/ProfileEdit.js"></script>
+
+
+    <style>
+        .btn-link:hover {
+            color: #333 !important;
+            text-decoration: none !important;
+            background-color: #f5f5f5 !important;
+        }
+
+        .btn-link {
+            padding: 0px !important;
+            font-size: 13px !important;
+            width: 100% !important;
+            text-align: left !important;
+            padding-left: 21px !important;
+        }
+        .fa-sign-in-alt {
+            font-size:15px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="main-wrapper">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="header">
+                <div class="header-left">
+                    <a href="/Home/Index" class="logo">
+                        @*<img src="~/img/logo.png" width="40" height="40" alt="">
+        <img src="~/img/logo 1-1.png" />*@
+                        @*<img src="~/img/s2 copy.png" style="float:left;height:60px" />*@
+                        <img src="~/img/NewIcon1.PNG" style="float:left;height:60px" />
+                        @*<span style="font-size:15px;">Compass Tutor</span>*@
+                    </a>
+                </div>
+                <div class="page-title-box pull-left">
+
+                </div>
+                <a id="mobile_btn" class="mobile_btn pull-left" href="#sidebar"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                <ul class="nav navbar-nav navbar-right user-menu pull-right">
+                    @*<li class="dropdown hidden-xs">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span class="badge bg-purple pull-right">3</span></a>
+                            <div class="dropdown-menu notifications">
+                                <div class="topnav-dropdown-header">
+                                    <span>Notifications</span>
+                                </div>
+                                <div class="drop-scroll">
+                                    <ul class="media-list">
+                                        <li class="media notification-message">
+                                            <a href="activities.html">
+                                                <div class="media-left">
+                                                    <span class="avatar">
+                                                        <img alt="John Doe" src="~/img/user.jpg" class="img-responsive img-circle">
+                                                    </span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0 noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
+                                                    <p class="m-0"><span class="notification-time">4 mins ago</span></p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media notification-message">
+                                            <a href="activities.html">
+                                                <div class="media-left">
+                                                    <span class="avatar">V</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0 noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
+                                                    <p class="m-0"><span class="notification-time">6 mins ago</span></p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media notification-message">
+                                            <a href="activities.html">
+                                                <div class="media-left">
+                                                    <span class="avatar">L</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0 noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
+                                                    <p class="m-0"><span class="notification-time">8 mins ago</span></p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media notification-message">
+                                            <a href="activities.html">
+                                                <div class="media-left">
+                                                    <span class="avatar">G</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0 noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
+                                                    <p class="m-0"><span class="notification-time">12 mins ago</span></p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media notification-message">
+                                            <a href="activities.html">
+                                                <div class="media-left">
+                                                    <span class="avatar">V</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0 noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
+                                                    <p class="m-0"><span class="notification-time">2 days ago</span></p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="topnav-dropdown-footer">
+                                    <a href="activities.html">View all Notifications</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown hidden-xs">
+                            <a href="javascript:;" id="open_msg_box" class="hasnotifications"><i class="fa fa-comment-o"></i> <span class="badge bg-purple pull-right">8</span></a>
+                        </li>*@
+                    <li class="dropdown">
+                        <a href="profile.html" class="dropdown-toggle user-link" data-toggle="dropdown" >
+                            <span class="user-img">
+                                @if (HttpContextAccessor.HttpContext.Session.GetString("image") != null)
+                                {
+                                    <img class="img-circle" id="layoutpic" src="@HttpContextAccessor.HttpContext.Session.GetString("image")" width="40" height="40" alt="Admin">
+                                }
+                                else
+                                {
+                                    <img class="img-circle" id="layoutpic" src="~/img/user.jpg" width="40" height="40" alt="Admin">
+
+                                }
+                                @*<img class="img-circle" id="layoutpic" src="~/img/user.jpg" width="40" alt="Admin">*@
+                                <span class="status online"></span>
+                            </span>
+                            <span>@User.Identity.Name</span>
+
+                            @*<i class="caret"></i>*@
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            @*<li><a href="profile.html">My Profile</a></li>*@
+
+                            @if (User.IsInRole("Tutor") && HttpContextAccessor.HttpContext.Session.GetString("firstname") != "")
+                            //@if (TempData["RoleName"].ToString() == "Tutor")
+                            {
+                                <li><a href="@Url.Action("ProfileView", "Tutor")">My Profile</a></li>
+                                <li><a href="@Url.Action("ProfileEdit", "Tutor")">Edit Profile</a></li>
+                            }
+                            @if (User.IsInRole("Student") && HttpContextAccessor.HttpContext.Session.GetString("firstname") != "")
+                            {
+                                <li><a href="@Url.Action("StudentProfileView", "Tutor")">My Profile</a></li>
+                                <li><a href="@Url.Action("ProfileEdit", "Student")">Edit Profile</a></li>
+                            }
+
+
+                            <li>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "LandingPage", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+
+
+                    </li>
+                </ul>
+                <div class="dropdown mobile-user-menu pull-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                    <ul class="dropdown-menu pull-right">
+
+                        @if (User.IsInRole("Tutor") && HttpContextAccessor.HttpContext.Session.GetString("firstname") != "")
+                        //@if (TempData["RoleName"].ToString() == "Tutor")
+                        {
+                            <li><a href="@Url.Action("ProfileView", "Tutor")">My Profile</a></li>
+                            <li><a href="@Url.Action("ProfileEdit", "Tutor")">Edit Profile</a></li>
+                        }
+                        @if (User.IsInRole("Student") && HttpContextAccessor.HttpContext.Session.GetString("firstname") != "")
+                        {
+                            <li><a href="@Url.Action("StudentProfileView", "Tutor")">My Profile</a></li>
+                            <li><a href="@Url.Action("ProfileEdit", "Student")">Edit Profile</a></li>
+                        }
+                        @*<li><a href="edit-profile.html">Edit Profile</a></li>*@
+                        @*<li><a href="settings.html">Settings</a></li>*@
+
+                        <li style="line-height:0px;">
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "LandingPage", new { area = "" })">
+                                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-inner slimscroll">
+                    <div id="sidebar-menu" class="sidebar-menu">
+                        <ul>
+
+                            @if (User.IsInRole("Tutor") && HttpContextAccessor.HttpContext.Session.GetString("firstname") != "")
+                            //@if (TempData["RoleName"].ToString() == "Tutor")
+                            {
+                                <li id="liTutorDashboard" class="active"> <a href="/Home/Index"><i class="fa fa-desktop" aria-hidden="true"></i> Dashboard</a></li>
+                                <li id="liMySlot"><a href="/Tutor/Schedule"><i class="fas fa-clipboard-check"></i> My Slots</a></li>
+                                <li id="liBookedSlots"><a href="/Tutor/Bookedslots"><i class="fas fa-book-open"></i> Booked Slots</a></li>
+                                <li><a href="#"><i class="fas fa-dollar-sign"></i> Transactions</a></li>
+                                <li><a href="#"><i class="far fa-question-circle"></i> FAQ'S</a></li>
+                            }
+                            @if (User.IsInRole("Student") && HttpContextAccessor.HttpContext.Session.GetString("firstname") != "")
+                            {
+                                <li id="liStudentDashboard" class="active"> <a href="/Home/Index"><i class="fa fa-desktop" aria-hidden="true"></i> Dashboard</a></li>
+                                <li id="liBookLessons"><a href="/Tutor/List"><i class="fas fa-book-open"></i> Book Lessons</a></li>
+                                <li id="liMySchedule"><a href="/Student/Schedulelessons"><i class="far fa-clock"></i> My Schedule</a></li>
+                                <li id="liCompletedSchedule"><a href="/Student/Completedlessons"><i class="far fa-calendar-alt"></i> Completed Schedule</a></li>
+                                <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Payment Information</a></li>
+                                <li><a href="#"><i class="fas fa-dollar-sign"></i> Transactions</a></li>
+                                <li><a href="#"><i class="far fa-question-circle"></i> FAQ'S</a></li>
+                            }
+                            @if (User.Identity.Name == "admin@gmail.com")
+                            {
+                                <li id="liAdminDashboard" class="active"> <a href="/Home/Index"><i class="fa fa-desktop" aria-hidden="true"></i> Dashboard</a></li>
+                                <li id="liSignUpUsers"><a href="/Common/SignupUsers"><i class="fas fa-sign-in-alt"></i> Sign Up Users</a></li>
+                                @*<li><a href="/Student/Schedule">Schedules</a></li>*@
+                                <li id="liSubjects"><a href="/Subject/Index"><i class="fas fa-book-open"></i> Subject</a></li>
+                                <li id="liSubjectTopics"><a href="/SubjectTopic/Index"><i class="fas fa-book-open"></i> Specify Subject Topic</a></li>
+                            }
+
+                            @*<li class="active"> <a href="/">Dashboard</a></li>
+        <li><a href="/Tutor/List">Tutors</a></li>
+        <li><a href="/Student/Schedule">Schedules</a></li>*@
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+        <partial name="_CookieConsentPartial" />
+
+        @RenderBody()
+
+
+
+
+
+
+
+    </div>
+    <div class="sidebar-overlay" data-reff="#sidebar"></div>
+
+    <script>
+        var data = [
+            { y: '2014', a: 50, b: 90 },
+            { y: '2015', a: 65, b: 75 },
+            { y: '2016', a: 50, b: 50 },
+            { y: '2017', a: 75, b: 60 },
+            { y: '2018', a: 80, b: 65 },
+            { y: '2019', a: 90, b: 70 },
+            { y: '2020', a: 100, b: 75 },
+            { y: '2021', a: 115, b: 75 },
+            { y: '2022', a: 120, b: 85 },
+            { y: '2023', a: 145, b: 85 },
+            { y: '2024', a: 160, b: 95 }
+        ],
+            config = {
+                data: data,
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Total Income', 'Total Outcome'],
+                fillOpacity: 0.6,
+                hideHover: 'auto',
+                behaveLikeLine: true,
+                resize: true,
+                pointFillColors: ['#ffffff'],
+                pointStrokeColors: ['black'],
+                gridLineColor: '#eef0f2',
+                lineColors: ['gray', 'orange']
+            };
+        config.element = 'area-chart';
+        Morris.Area(config);
+        config.element = 'line-chart';
+        Morris.Line(config);
+        config.element = 'bar-chart';
+        Morris.Bar(config);
+        config.element = 'stacked';
+        config.stacked = true;
+        Morris.Bar(config);
+        Morris.Donut({
+            element: 'pie-chart',
+            data: [
+                { label: "Employees", value: 30 },
+                { label: "Clients", value: 15 },
+                { label: "Projects", value: 45 },
+                { label: "Tasks", value: 10 }
+            ]
+        });
+    </script>
+    @*<environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
+            </script>
+        </environment>*@
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+         var activePage =  '@ViewBag.Pagename' ;
+            //alert(activePage);
+
+      //  $('#student').trigger('click');
+        if (activePage === 'SignUpUsers') {
+            $('#liSignUpUsers').addClass('active');
+            $('#liAdminDashboard').removeClass('active');
+        }
+        if (activePage == 'liSubjects') {
+            $('#liSignUpUsers').removeClass('active');
+            $('#liSubjects').addClass('active');
+            $('#liAdminDashboard').removeClass('active');
+        }
+        if (activePage === 'HomeIndex') {
+            $('#liSignUpUsers').removeClass('active');
+            $('#liAdminDashboard').addClass('active');
+        } 
+        if (activePage === 'Book Lessons') {
+            $('#liBookLessons').addClass('active');
+            $('#liMySchedule').removeClass('active'); 
+            $('#liCompletedSchedule').removeClass('active'); 
+            $('#liStudentDashboard').removeClass('active'); 
+        } 
+        if (activePage === 'Schedule Lessons') {
+            $('#liBookedSlots').removeClass('active');
+            $('#liMySchedule').addClass('active');
+            $('#liCompletedSchedule').removeClass('active');
+            $('#liStudentDashboard').removeClass('active');
+        }
+        if (activePage === 'Completed Lessons') {
+            $('#liBookLessons').removeClass('active');
+            $('#liMySchedule').removeClass('active');
+            $('#liCompletedSchedule').addClass('active');
+            $('#liStudentDashboard').removeClass('active');
+        } 
+        if (activePage === 'My Slots') {
+            $('#liBookedSlots').removeClass('active');
+            $('#liMySlot').addClass('active');
+            $('#liTutorDashboard').removeClass('active');
+        }
+        if (activePage === 'Bookedslots') {
+            $('#liBookedSlots').addClass('active');
+            $('#liMySlot').removeClass('active');
+            $('#liTutorDashboard').removeClass('active');
+        } 
+        if (activePage === 'Subject') {
+            $('#liSubjects').addClass('active');
+            $('#liBookedSlots').removeClass('active');
+            $('#liMySlot').removeClass('active');
+            $('#liTutorDashboard').removeClass('active');
+            $('#liSubjectTopics').removeClass('active');
+            $('#liAdminDashboard').removeClass('active');
+        } 
+        if (activePage === 'Specify Subject Topic') {
+            $('#liSubjectTopics').addClass('active');
+            $('#liSubjects').removeClass('active');
+            $('#liBookedSlots').removeClass('active');
+            $('#liMySlot').removeClass('active');
+            $('#liTutorDashboard').removeClass('active');
+            $('#liAdminDashboard').removeClass('active');
+
+        } 
+
+    });
+</script>
+
+
+

@@ -1,0 +1,384 @@
+﻿@model CompassTutor.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.pagename = "HomeIndex";
+}
+<style>
+    .dash-widget-info {
+        text-align: center !important;
+        padding-top: 10px;
+    }
+    .dash-widget {
+        cursor:pointer !important;
+    }
+    .dash-widget-icon {
+        float: none !important;
+    }
+
+    .h3_left {
+        text-align: left !important;
+        color: white !important;
+    }
+
+    h3 {
+        color: white !important
+    }
+
+    .dash-widget-info > h3 {
+        font-size: 24px !important;
+        font-weight: 500 !important;
+    }
+
+    .fa-user-graduate, .fa-chalkboard-teacher {
+        color: #3a3a3a;
+        font-size: 75px;
+        opacity: 0.5;
+    }
+
+    .h3_left1 h3 {
+        text-align: left !important;
+    }
+
+    .h3_left1 small {
+        float: left !important;
+        color: white;
+    }
+
+    .clr_1 {
+        background-color: #f4543e !important;
+        border: 0px !important;
+    }
+
+    .clr_2 {
+        background-color: #00a458;
+        border: 0px !important;
+    }
+
+    .clr_3 {
+        background-color: #0071b7;
+        border: 0px !important;
+    }
+
+    .clr_4 {
+        background-color: #7fa117;
+        border: 0px;
+    }
+
+    .clr_5 {
+        background-color: #177ba1;
+        border: 0px;
+    }
+
+    .clr_6 {
+        background-color: #b66818;
+        border: 0px;
+    }
+
+    .page-wrapper {
+        min-height: 0px !important;
+    }
+
+    .btn:focus {
+        outline: 0px auto -webkit-focus-ring-color !important;
+    }
+    .dash-widget:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+</style>
+
+@if (Model.Roles == "Admin")
+{
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="row h3_left1">
+
+                <a href="@Url.Action("Index","Student",new { text="All Students"})">
+
+                    <div class="col-md-6 col-sm-6 col-lg-4">
+                        <div class="dash-widget clr_1 clearfix card-box">
+
+                            <div class="dash-widget-info col-md-8 p-0">
+                                <h3>@Html.Raw(Model.TotalStudents)</h3>
+                                <h4 class="h3_left">Students</h4>
+                                <small>Total Students</small>
+                            </div>
+                            <div class="col-md-4 p-0 ">
+                                <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="@Url.Action("Index","Student",new { text="Active Students"})">
+                    <div class="col-md-6 col-sm-6 col-lg-4">
+                        <div class="dash-widget clr_2 clearfix card-box">
+
+                            <div class="dash-widget-info col-md-8 p-0">
+                                <h3>@Html.Raw(Model.ActiveStudents)</h3>
+                                <h4 class="h3_left">Students</h4>
+                                <small>Active Students</small>
+                            </div>
+                            <div class="col-md-4 p-0 ">
+                                <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="@Url.Action("Index","Student",new { text="In-Active Students"})">
+                    <div class="col-md-6 col-sm-6 col-lg-4">
+                        <div class="dash-widget clr_3 clearfix card-box ">
+                            <div class="dash-widget-info col-md-8 p-0">
+                                <h3>@Html.Raw(Model.InActiveStudents)</h3>
+                                <h4 class="h3_left">Students</h4>
+                                <small>In-Active Students</small>
+                            </div>
+                            <div class="col-md-4 p-0 ">
+                                <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+                <a href="@Url.Action("Index","Tutor",new { text="All Tutors"})">
+                    <div class="col-md-6 col-sm-6 col-lg-4">
+                        <div class="dash-widget clr_4 clearfix card-box">
+                            <div class="dash-widget-info col-md-8 p-0">
+                                <h3>@Html.Raw(Model.TotalTutors)</h3>
+                                <h4 class="h3_left">Tutors</h4>
+                                <small>Total Tutors</small>
+                            </div>
+                            <div class="col-md-4 p-0">
+                                <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+                <a href="@Url.Action("Index","Tutor",new { text="Active Tutors"})">
+                    <div class="col-md-6 col-sm-6 col-lg-4">
+                        <div class="dash-widget clr_5 clearfix card-box">
+
+                            <div class="dash-widget-info col-md-8 p-0">
+                                <h3>@Html.Raw(Model.ActiveTutors)</h3>
+                                <h4 class="h3_left"> Tutors</h4>
+                                <small>Active Tutors</small>
+
+                            </div>
+                            <div class="col-md-4 p-0 ">
+                                <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="@Url.Action("Index","Tutor",new { text="In-Active Tutors"})">
+                    <div class="col-md-6 col-sm-6 col-lg-4">
+                        <div class="dash-widget clr_6 clearfix card-box">
+
+                            <div class="dash-widget-info col-md-8 p-0">
+                                <h3>@Html.Raw(Model.InActiveTutors)</h3>
+                                <h4 class="h3_left">Tutors</h4>
+                                <small>In-Active Tutors</small>
+                            </div>
+                            <div class="col-md-4 p-0 ">
+                                <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+            </div>
+
+
+        </div>
+
+    </div>
+}
+else if (Model.Roles == "Student")
+{
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="row h3_left1">
+
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_1 clearfix card-box" >
+
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.StudentSlots)</h3>
+                            <h4 class="h3_left">My Schedule</h4>
+                            <small>Total Schedules</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_2 clearfix card-box">
+
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.CompletedSchedules)</h3>
+                            <h4 class="h3_left">Completed</h4>
+                            <small>Total Completed Schedules</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_3 clearfix card-box ">
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.UpcomingSchedules)</h3>
+                            <h4 class="h3_left">Upcoming</h4>
+                            <small>Upcoming Schedules</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_4 clearfix card-box">
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.TotalTutors)</h3>
+                            <h4 class="h3_left">Tutors</h4>
+                            <small>Total Tutors</small>
+                        </div>
+                        <div class="col-md-4 p-0">
+                            <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_5 clearfix card-box">
+
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.ActiveTutors)</h3>
+                            <h4 class="h3_left"> Tutors</h4>
+                            <small>Active Tutors</small>
+
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_6 clearfix card-box">
+
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.InActiveTutors)</h3>
+                            <h4 class="h3_left">Tutors</h4>
+                            <small>In-Active Tutors</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+}
+else if (Model.Roles == "Tutor")
+{
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="row h3_left1">
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_5 clearfix card-box">
+
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.TotalSchedules)</h3>
+                            <h4 class="h3_left">Schedules</h4>
+                            <small>Total Schedules</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_4 clearfix card-box">
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.BookedSlots)</h3>
+                            <h4 class="h3_left">Booked Slots</h4>
+                            <small>Total Booked Slots</small>
+                        </div>
+                        <div class="col-md-4 p-0">
+                            <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_6 clearfix card-box">
+
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.TutorAvailableSlots)</h3>
+                            <h4 class="h3_left">Available Schedules</h4>
+                            <small>Total Available Schedules</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-chalkboard-teacher"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_1 clearfix card-box">
+
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.TotalStudents)</h3>
+                            <h4 class="h3_left">Students</h4>
+                            <small>Total Students</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_2 clearfix card-box">
+
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.ActiveStudents)</h3>
+                            <h4 class="h3_left">Students</h4>
+                            <small>Active Students</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-4">
+                    <div class="dash-widget clr_3 clearfix card-box ">
+                        <div class="dash-widget-info col-md-8 p-0">
+                            <h3>@Html.Raw(Model.InActiveStudents)</h3>
+                            <h4 class="h3_left">Students</h4>
+                            <small>In-Active Students</small>
+                        </div>
+                        <div class="col-md-4 p-0 ">
+                            <span class="pull-right"><i class="fas fa-user-graduate"></i></span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+   
+
+
+}
+
+
+

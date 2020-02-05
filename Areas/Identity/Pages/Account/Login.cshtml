@@ -1,0 +1,132 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+<style>
+    /*.validation-summary-errors {
+        display: none !important;
+    }*/
+
+    .logo_text {
+        font-size: 15px;
+        color: green;
+        font-family: cursive;
+    }
+
+    .logo {
+        margin: 10px 25%;
+    }
+     #cookieConsent{
+        display:none !important;
+    }
+</style>
+@*<h2>@ViewData["Title"]</h2>*@
+<div class="container-fluid " style="padding:0px !important;">
+    <div class="bg m_bg">
+        <div class="container">
+            <div class="row" style="padding-top:9%;padding-bottom:10%;">
+                <div class="col-md-4 bg_style">
+                    @*<h4>Sign in with social networks.</h4>*@
+
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            
+                        }
+                        else
+                        {
+                            <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    <p style="text-align:center;">
+                                        @foreach (var provider in Model.ExternalLogins)
+                                        {
+                                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                        }
+                                    </p>
+                                </div>
+                            </form>
+                        }
+                    }
+                    @*<h5 style="text-align:center;margin:30px 0px;">OR</h5>*@
+                    <form method="post">
+                        <div style="text-align:center;padding-bottom:15px;">
+                        @*<a href="#" class="logo">*@
+                            <img src="~/img/NewIcon1.png" style="height:60px" />
+                            @*<span class="logo_text">Compass Tutor</span>*@
+                        @*</a>*@
+                            </div>
+                        @*<h4 style="text-align:center;">Login</h4>*@
+                        <hr style="margin-top:0px;" />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Input.Email"></label>
+                            <input asp-for="Input.Email" class="form-control" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Password"></label>
+                            <input asp-for="Input.Password" class="form-control" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label asp-for="Input.RememberMe">
+                                    <input asp-for="Input.RememberMe" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" style="text-align:center;">
+                            <button type="submit" id="test" class="btn btn-warning">Log in</button>
+                        </div>
+                        <div class="form-group">
+                            @*<p style="float:left;">
+                                    <a asp-page="./ForgotPassword">Forgot your password?</a>
+                                </p>*@
+                            <p style="text-align:center;">
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                            </p>
+                        </div>
+                    </form>
+                    @*</div>
+                        <div class="col-md-5 col-md-offset-1" style="border-left:2px dashed;">*@
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //$('#test').click(function () {
+    //   // alert("test");
+    //      $.ajax({
+    //        url: '/Home/Index1',
+    //        dataType: "json",
+    //        type: "Post",
+    //        //data: { startdate: startdate, enddate: enddate },
+    //        contentType: 'application/json; charset=utf-8',
+    //        //async: true,
+    //        //processData: false,
+    //        //cache: false,
+    //        success: function (data) {
+    //            alert("test");
+    //            return false;
+    //        },
+    //        error: function (xhr) {
+    //            alert('error');
+    //        }
+    //    });
+
+
+    //});
+</script>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

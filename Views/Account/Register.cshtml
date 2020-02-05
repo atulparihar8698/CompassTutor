@@ -1,0 +1,36 @@
+﻿@using CompassTutor.Models.AccountViewModels
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<br />
+<div class="container-fluid ">
+    <div class="bg">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4" style="padding-top:15px; margin:0px 35%;background-color:white;border-radius:5px; box-shadow: 5px 10px 8px #888888;opacity:0.8;">
+                    <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" style="width:350px">
+                        <h4>Create a new account.</h4>
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Email" style="width:185px; display:inline-block;"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" style="width:185px; display:inline-block;"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword" style="width:185px; display:inline-block;"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-default" style="float:right;">Register</button>
+                    </form>
+                </div>
+            </div>
+            </div></div></div>

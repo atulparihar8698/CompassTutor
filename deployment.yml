@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compasstutor-deployment
+spec:
+  selector:
+    matchLabels:
+      app: compasstutor-pod
+  replicas: 2    
+  template:
+    metadata:
+      labels:
+        app: compasstutor-pod
+    spec:
+      containers:
+      - name: compasstutor-container
+        image: compasstutor:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+        - containerPort: 5000

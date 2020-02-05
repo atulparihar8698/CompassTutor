@@ -1,0 +1,841 @@
+﻿@model Data.Models.Student
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<style>
+    .col-md-4 {
+        min-height: 80px;
+    }
+
+    .form-focus {
+        height: 40px !important;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+    }
+    /*.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+        padding-top: 10px;
+    }*/
+    .min_height {
+        min-height: 0px !important;
+    }
+</style>
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.1.3/circle-progress.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+@if (ViewData["studentdata"] != null)
+{
+   
+    <div class="page-wrapper" style="min-height: 638px;padding-top:0px;">
+        <div class="content container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4 class="page-title">Edit Profile</h4>
+                </div>
+            </div>
+
+            <div class="card-box" style="padding-bottom:0px !important">
+                <h3 class="card-title">Basic Information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="profile-img-wrap">
+                            <img class="inline-block" id="profile_pic" src="@Model.Profile" alt="user">
+                            <div class="fileupload btn btn-default">
+                                <span class="btn-text">edit</span>
+                                <input class="upload" type="file" id="profile" value="" onchange="readFile(this)">
+                            </div>
+                        </div>
+                        <input type="hidden" id="id" class="form-control floating" value="@Model.Id" />
+                        <input type="hidden" id="password" class="form-control floating" value="@Model.Password" />
+                        <div class="profile-basic">
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus firstName1">
+                                        <label class="control-label" for="firstName">First Name</label>
+                                        <input type="text" id="firstName" class="form-control floating" value="@Model.FirstName" placeholder="firstName" required>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus lastName1">
+                                        <label class="control-label">Last Name</label>
+                                        <input type="text" id="lastName" class="form-control floating" value="@Model.LastName" />
+                                        <input type="hidden" class="form-control floating" id="isapproved" value="@Model.IsApproved.ToString()" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus email1">
+                                        <label class="control-label">Email</label>
+                                        <input type="email" id="email" class="form-control floating" value="@User.Identity.Name" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus mobileNumber1">
+                                        <label class="control-label">Mobile Number</label>
+                                        <input type="text" class="form-control floating" id="mobileNumber" value="@Model.MobileNumber" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus select-focus  gender1">
+                                        <label class="control-label ">Gender</label>
+                                        <select class="select form-control floating" id="gender" value="@Model.Gender">
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card-box" style="padding-bottom:0px !important">
+                <h3 class="card-title">Contact Information</h3>
+                <div class="row " style="margin-top:30px;">
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus country1">
+                            <label class="control-label">Country</label>
+                            <select class="select form-control floating" id="country" value="@Model.CountryId">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus state1">
+                            <label class="control-label">State</label>
+                            <select class="select form-control floating" id="state" value="@Model.StateId">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    @*<div class="col-md-4" id="ShowCity">
+                            <div class="form-group form-focus select-focus city1">
+                                <label class="control-label">City</label>
+                                <select class="select form-control floating" id="city" value="@Model.CityId">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>*@
+
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus city1">
+                            <label class="control-label">City</label>
+                            <select class="select form-control floating" id="city" value="@Model.CityId">
+                                <option value="">Select</option>
+                            </select>
+
+                            <button class="btn btn-success btn-sm" data-toggle="popover" id="addNewCity" style="margin-left:5px;display:none;border-radius:30%;"><i class="fas fa-plus-circle"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus timezone1">
+                            <label class="control-label">Time Zone</label>
+                            <select class="select form-control floating" id="timezone" value="@Model.TimeZoneId">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus address1">
+                            <label class="control-label">Address</label>
+                            <input type="text" class="form-control floating" id="address" value="@Model.Address" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus zipcode1">
+                            <label class="control-label">ZipCode</label>
+                            <input type="text" class="form-control floating" id="zipcode" value="@Model.ZipCode" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <h3 class="card-title">Additional Information</h3>
+                <div class="row" style="margin-top:30px;">
+                    <div class="col-md-4">
+                        <div class="form-group form-focus studentpreviousschool1">
+                            <label class="control-label">School</label>
+                            <input type="text" class="form-control floating" id="studentpreviousschool" value="@Model.StudentPreviousSchool" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus educationLevel1">
+                            <label class="control-label">Education Level</label>
+                            <select class="select form-control floating" id="educationLevel" value="@Model.EducationLevel">
+                                @*<option value="">Select</option>
+                                    <option value="High school">High school</option>
+                                    <option value="Associate's">Associate's</option>
+                                    <option value="Bachelor's">Bachelor's</option>*@
+                                <option value="">Select</option>
+                                <option value="Adult">Adult</option>
+                                <option value="College">College</option>
+                                <option value="High school">High school</option>
+                                <option value="Middle school">Middle school</option>
+                                <option value="Elementary">Elementary</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus subject1" style="min-height:55px !important">
+                            <label class="control-label">Subject</label>
+                            <select class="select form-control floating" multiple id="subject" value="@Model.Subject">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="" style="display:none;padding-top:60px;" id="Div_reasons">
+                        @*<label style="padding-left:20px" id="labelforReason">Why are you learning Subject</label>*@
+                        <label style="padding-left:15px" id="labelforReason"></label>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label class="radio-inline">
+                                    <input name="reason" id="reason1" value="For Work" type="radio" />For Work
+                                </label>
+                                <label class="radio-inline">
+                                    <input name="reason" id="reason2" value="For School" type="radio" />For School
+                                </label>
+                                <label class="radio-inline">
+                                    <input name="reason" id="reason3" value="For Other Reasons" type="radio" />For Other Reasons
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top:50px;padding-left:15px">
+                            <div class="col-md-8" style="display:none" id="Div_otherreason">
+                                @*<div class="form-group form-focus">
+                                        <label class="control-label">What reasons?</label>
+                                        <input type="text" class="form-control floating" id="otherreasons" value="@Model.OtherReason" />
+                                    </div>*@
+
+                                <div class="form-group form-focus select-focus otherreasons1" style="min-height:fit-content;height:auto !important;">
+                                    <label class="control-label">What reasons?</label>
+                                    <textarea class=" floating" id="otherreasons" rows="5" cols="91%"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="text-center m-t-20">
+                <button class="btn btn-primary btn-lg" onclick="Save()" type="button">Save &amp; update</button>
+            </div>
+
+        </div>
+        <div id="CityTip" class="hide">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Add New City</h4></div>
+                <div class="panel-body">
+                    @*<div class="row">
+                            <label for="name">State:</label>
+                            <select class="select form-control floating" id="dd_state">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="error_state" style="display:none;color:red">The State Field is Required</span>
+                        </div>*@
+                    <span class="error_state" style="display:none;color:red">* Please Select The State</span>
+                    <div class="row">
+                        <label for="name">City:</label>
+                        <input type="text" id="new_city" class="form-control input-md">
+                        @*<span class="error_city" style="display:none;color:red">The City Field is Required</span>*@
+                        <span class="error_city" style="display:none;color:red">The City Field is Required</span>
+                        <span class="error_duplicate" style="display:none;color:red">City Name Already Exist</span>
+                    </div>
+                </div>
+                <div class="panel-footer" style="text-align:center">
+                    <button class="btn-success" id="btnSaveCity">Save</button>
+                    <button class="btn-danger" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+
+
+
+
+          $("#country").select2({
+                placeholder: "Select a Country",
+                allowClear: true
+            });
+            $("#state").select2({
+                placeholder: "Select a State",
+                allowClear: true
+            });
+
+            $("#city").select2({
+                placeholder: "Select a City",
+                allowClear: true
+            });
+            $("#timezone").select2({
+                placeholder: "Select a TimeZone",
+                allowClear: true
+            });
+
+       @*$.ajax({
+               type: "GET",
+                url: "/tutor/GetSubjects",
+                success: function (data) {
+                    $('#subject').html("");
+                       $('#subject').append('<option value="">Select</option>');
+                    console.log(data);
+
+                    $.each(data, function (index, value) {
+                        $('#subject').append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                    var dataa = "@Model.Subject";
+                    $.each(dataa.split(","), function(i,e){
+    $("#subject option[value='" + e + "']").prop("selected", true);
+    $("#subject").val(dataa.split(",")).change();
+});
+                }
+       });*@
+
+
+         $('#subject').attr("subjectId", "@Model.Subject");
+
+            @*$.ajax({
+            type: "GET",
+            url: "/common/getcountries",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (index, value) {
+                    $("#country").append('<option value="' + value.id + '">' + value.name + '</option>');
+
+                });
+                $("#country > [value=" + "@Model.CountryId" + "]").attr("selected", "true");
+
+            }
+        });*@
+
+        $('#country').attr("countryId", "@Model.CountryId");
+
+
+          @*$.ajax({
+            type: "GET",
+            url: "/common/getstates/" + @Model.CountryId,
+            success: function (data) {
+                $('#state').html("");
+                $('#state').append('<option value="">Select</option>');
+               // $('#city').html("");
+                //$('#city').append('<option value="">Select</option>');
+                $.each(data, function (index, value) {
+                    $('#state').append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+                $("#state > [value=" + "@Model.StateId" + "]").attr("selected", "true");
+            }
+        });*@
+
+         $('#state').attr("stateId", "@Model.StateId");
+
+        @*$.ajax({
+            type: "GET",
+            url: "/common/getcities/" + @Model.StateId,
+            success: function (data) {
+                $('#city').html("");
+                $('#city').append('<option value="">Select</option>');
+                $.each(data, function (index, value) {
+                    $('#city').append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+
+                $("#city > [value=" + "@Model.CityId" + "]").attr("selected", "true");
+            }
+        });*@
+
+        $('#city').attr("cityId", "@Model.CityId");
+
+
+        @*$.ajax({
+            type: "GET",
+            url: "/common/GetTimeZones",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (index, value) {
+                    $("#timezone").append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+                $("#timezone > [value=" + "@Model.TimeZoneId" + "]").attr("selected", "true");
+            }
+        });*@
+
+         $('#timezone').attr("timeZoneId", "@Model.TimeZoneId");
+        var data =@Html.Raw(@Json.Serialize(Model));
+
+        console.log(data);
+        $("#gender").val(data.gender).change();
+        $("#educationLevel").val(data.educationLevel).change();
+
+    });
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            // var chv = $("input[name='reason']:checked").val()
+            //alert(chv);
+            var reasonValue = '@Model.Reason';
+            var otherRes = '@Model.OtherReason.ToString()';
+            if (reasonValue != null && reasonValue != "") {
+                var otherRes = '@Model.OtherReason.ToString()';
+                   $('#otherreasons').val(otherRes);
+            }
+
+
+
+
+             if (reasonValue == "For Work") {
+                $('#reason1').prop('checked', true);
+            }
+            if (reasonValue == "For School") {
+                $('#reason2').prop('checked', true);
+            }
+            if (reasonValue == "For Other Reasons") {
+                $('#reason3').prop('checked', true);
+                $('#Div_otherreason').show();
+            }
+          //  debugger;
+           var ss = '@Model.Subject';
+          // alert(ss)
+
+            if (ss != null && ss != "") {
+                //$('#labelforReason').text("Why are you learning " + subjectname + " ?");
+                  $('#labelforReason').text("Why are you learning Subject(s) ?");
+                $('#Div_reasons').show();
+            }
+            else {
+                $('#Div_reasons').hide();
+            }
+       $('#subject').change(function () {
+
+            var subjectname = $("#subject option:selected").text();
+             var subjectid= $("#subject option:selected").val();
+           // alert(subjectid);
+
+            if (subjectid != null && subjectid != "") {
+                //$('#labelforReason').text("Why are you learning " + subjectname + " ?");
+                  $('#labelforReason').text("Why are you learning Subject(s) ?");
+                $('#Div_reasons').show();
+            }
+            else {
+                $('#labelforReason').text("");
+                $('#Div_reasons').hide();
+            }
+
+       })
+            $('input:radio[name=reason]').change(function () {
+                // alert(this.value)
+                if (this.value == 'For Other Reasons') {
+
+                    $('#Div_otherreason').show();
+                }
+                else {
+                    $('#Div_otherreason').hide();
+                }
+            });
+
+             $("#mobileNumber,#zipcode").keypress(function (e) {
+                $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+                if ((event.which != 46 || $(this).val().indexOf('.') == -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
+            $('#zipcode').on('keyup', function (e) {
+                var $self = $(this),
+                    v = $self.val(),
+
+                  max = 1000000;
+
+                //blank any input that isint a number
+                if (!/^\d*$/.test(v)) {
+                    $self.val('');
+                    return;
+                }
+
+                //trim the value until it meets the condition
+                if (v >= max) {
+                    while (v >= max) {
+                        v = v.substring(0, v.length - 1);
+                    }
+
+                    $self.val(v);
+                }
+            });
+
+        });
+    </script>
+
+}
+else
+{
+    <div class="page-wrapper NoId" style="padding-top:0px !important;">
+        <div class="content container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4 class="page-title">Edit Profile</h4>
+                </div>
+            </div>
+
+            <div class="card-box" style="padding-bottom:0px !important">
+                <h3 class="card-title">Basic Information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="profile-img-wrap">
+                            <img class="inline-block" id="profile_pic" src="~/img/user.jpg" alt="user">
+                            <div class="fileupload btn btn-default">
+                                <span class="btn-text">edit</span>
+                                <input class="upload" type="file" id="profile" value="" onchange="readFile(this)">
+                            </div>
+                        </div>
+                        <input type="hidden" id="id" class="form-control floating" value="" />
+                        <input type="hidden" id="password" class="form-control floating" value="" />
+                        <div class="profile-basic">
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus firstName1">
+                                        <label class="control-label" for="firstName">First Name</label>
+                                        <input type="text" id="firstName" class="form-control floating" value="" placeholder="firstName" required>
+
+                                    </div>
+                                </div>
+                                @*<div class="col-md-4">
+                                    <div class="form-group form-focus">
+                                        <label class="control-label">Middle Name</label>
+                                        <input type="text" id="middleName" class="form-control floating" value="@Model.LastName" />
+                                    </div>*@
+                                @*</div>*@
+
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus lastName1">
+                                        <label class="control-label">Last Name</label>
+                                        <input type="text" id="lastName" class="form-control floating" value="" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus email1">
+                                        <label class="control-label">Email</label>
+                                        <input type="email" id="email" class="form-control floating" value="@User.Identity.Name" readonly />
+                                    </div>
+                                </div>
+                                @*<div class="col-md-4">
+                                        <div class="form-group form-focus">
+                                            <label class="control-label">Birth Date</label>
+                                            <div class="cal-icon"><input id="dob" class="form-control floating datetimepicker" type="text" value="@Model.DOB"></div>
+                                        </div>
+                                    </div>*@
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus mobileNumber1">
+                                        <label class="control-label">Mobile Number</label>
+                                        <input type="text" class="form-control floating" id="mobileNumber" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group form-focus select-focus  gender1">
+                                        <label class="control-label">Gender</label>
+                                        <select class="select form-control floating" id="gender" value="">
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card-box" style="padding-bottom:0px !important">
+                <h3 class="card-title">Contact Information</h3>
+                <div class="row" style="margin-top:30px;">
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus country1">
+                            <label class="control-label">Country</label>
+                            <select class="select form-control floating" id="country" value="">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus state1">
+                            <label class="control-label">State</label>
+                            <select class="select form-control floating" id="state" value="">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    @*<div class="col-md-4">
+                            <div class="form-group form-focus select-focus city1">
+                                <label class="control-label">City</label>
+                                <select class="select form-control floating" id="city" value="">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>*@
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus city1">
+                            <label class="control-label">City</label>
+                            <select class="select form-control floating" id="city" value="">
+                                <option value="">Select</option>
+                            </select>
+                            <button class="btn btn-warning btn-sm" data-toggle="popover" id="addNewCity" style="margin-left:5px;display:none">Add City</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus timezone1">
+                            <label class="control-label">Time Zone</label>
+                            <select class="select form-control floating" id="timezone" value="">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus address1">
+                            <label class="control-label">Address</label>
+                            <input type="text" class="form-control floating" id="address" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus zipcode1">
+                            <label class="control-label">ZipCode</label>
+                            <input type="text" class="form-control floating" id="zipcode" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <h3 class="card-title">Additional Information</h3>
+                <div class="row" style="margin-top:30px;">
+                    <div class="col-md-4 ">
+                        <div class="form-group form-focus studentpreviousschool1">
+                            <label class="control-label">School</label>
+                            <input type="text" class="form-control floating" id="studentpreviousschool" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus educationLevel1">
+                            <label class="control-label">Education Level</label>
+                            <select class="select form-control floating" id="educationLevel" value="">
+                                <option value="">Select</option>
+                                <option value="Adult">Adult</option>
+                                <option value="College">College</option>
+                                <option value="High school">High school</option>
+                                <option value="Middle school">Middle school</option>
+                                <option value="Elementary">Elementary</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group form-focus select-focus subject1" style="min-height:55px !important">
+                            <label class="control-label">Subject</label>
+                            <select class="select form-control floating" multiple id="subject" value="">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="display:none;padding-top:10px" id="Div_reasons">
+                    @*<label style="padding-left:20px" id="labelforReason">Why are you learning Subject</label>*@
+                    <label style="padding-left:15px" id="labelforReason"></label>
+                    <div class="form-group">
+                        <div class="col-md-5">
+                            <label class="radio-inline">
+                                <input name="reason" id="reason1" value="For Work" type="radio" checked="checked" />For Work
+                            </label>
+                            <label class="radio-inline">
+                                <input name="reason" id="reason2" value="For School" type="radio" />For School
+                            </label>
+                            <label class="radio-inline">
+                                <input name="reason" id="reason3" value="For Other Reasons" type="radio" />For Other Reasons
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="row" style="padding-top:50px;padding-left:15px">
+                        <div class="col-md-8" style="display:none" id="Div_otherreason">
+                            @*<div class="form-group form-focus">
+                                    <label class="control-label">What reasons?</label>
+                                    <input type="text" class="form-control floating" id="otherreasons" />
+                                </div>*@
+                            <div class="form-group form-focus select-focus otherreasons1" style="min-height:fit-content;height:auto !important;">
+                                <label class="control-label">What reasons?</label>
+                                <textarea class=" floating" id="otherreasons" rows="5" cols="91%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center m-t-20">
+                <button class="btn btn-primary btn-lg" onclick="Save()" type="button">Save &amp; update</button>
+            </div>
+
+        </div>
+        <div id="CityTip" class="hide">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Add New City</h4></div>
+                <div class="panel-body">
+                    @*<div class="row">
+                            <label for="name">State:</label>
+                            <select class="select form-control floating" id="dd_state">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="error_state" style="display:none;color:red">The State Field is Required</span>
+                        </div>*@
+                    <span class="error_state" style="display:none;color:red">* Please Select The State</span>
+                    <div class="row">
+                        <label for="name">City:</label>
+                        <input type="text" id="new_city" class="form-control input-md">
+                        @*<span class="error_city" style="display:none;color:red">The City Field is Required</span>*@
+                        <span class="error_city" style="display:none;color:red">The City Field is Required</span>
+                        <span class="error_duplicate" style="display:none;color:red">City Name Already Exist</span>
+                    </div>
+                </div>
+                <div class="panel-footer" style="text-align:center">
+                    <button class="btn-success" id="btnSaveCity">Save</button>
+                    <button class="btn-danger" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#country").select2({
+                placeholder: "Select a Country",
+                allowClear: true
+            });
+            $("#state").select2({
+                placeholder: "Select a State",
+                allowClear: true
+            });
+
+            $("#city").select2({
+                placeholder: "Select a City",
+                allowClear: true
+            });
+            $("#timezone").select2({
+                placeholder: "Select a TimeZone",
+                allowClear: true
+            });
+
+        });
+
+    </script>
+
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // var chv = $("input[name='reason']:checked").val()
+        //alert(chv);
+        var subjectname = $('#subject').val();
+        //alert(subjectname);
+        if (subjectname != null && subjectname != "") {
+            //$('#labelforReason').text("Why are you learning " + subjectname + " ?");
+            $('#labelforReason').text("Why are you learning Subject(s) ?");
+            $('#Div_reasons').show();
+        }
+        else {
+            $('#Div_reasons').hide();
+        }
+        $('#subject').change(function () {
+            // var subjectname = $('#subject ').val();
+            var subjectname = $("#subject option:selected").text();
+            var subjectid = $("#subject option:selected").val();
+            // alert(subjectname);
+            if (subjectid != null && subjectid != "") {
+                // $('#labelforReason').text("Why are you learning " + subjectname + " ?");
+                $('#labelforReason').text("Why are you learning Subject(s) ?");
+                $('#Div_reasons').show();
+            }
+            else {
+                $('#labelforReason').text("");
+                $('#Div_reasons').hide();
+            }
+
+        })
+        $('input:radio[name=reason]').change(function () {
+            // alert(this.value)
+            if (this.value == 'For Other Reasons') {
+
+                $('#Div_otherreason').show();
+            }
+            else {
+                $('#Div_otherreason').hide();
+            }
+        });
+        $("#mobileNumber,#zipcode").keypress(function (e) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') == -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+        $('#zipcode').on('keyup', function (e) {
+            var $self = $(this),
+                v = $self.val(),
+
+                max = 1000000;
+
+            //blank any input that isint a number
+            if (!/^\d*$/.test(v)) {
+                $self.val('');
+                return;
+            }
+
+            //trim the value until it meets the condition
+            if (v >= max) {
+                while (v >= max) {
+                    v = v.substring(0, v.length - 1);
+                }
+
+                $self.val(v);
+            }
+        });
+
+        var idvalue = '@ViewBag.displaySidebar';
+
+        if (idvalue == 'NO') {
+            $('#sidebar').hide();
+            $(".NoId").css("margin-left",0);
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="~/js/common.js"></script>
+<script src="~/js/Student/ProfileEdit.js"></script>
+
