@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
+FROM mcr.microsoft.com/dotnet
 EXPOSE 8089
 WORKDIR /app
 ENV ASPNETCORE_URLS http://*:6000
